@@ -5,7 +5,6 @@ on:
     branches:
       - master
       - CLN-[0-9]?
-      - DEV_*
     paths:
       - '**/*.java'
       - '**/*.feature'
@@ -13,17 +12,20 @@ on:
       - '**/pom.xml'
       - '**/*.json'
 
-
- 
 jobs:
   build:
-    name: Basic smoke test
+    name: Basic smoke test test
     runs-on: ubuntu-latest
     steps:
-    - name: Get branch name
+    - name: Get branch name test
       id: branch-name
-      run: echo "::set-output name=branch::$(echo ${GITHUB_REF#refs/heads/})"
+      run: git fetch --depth 1 $GITHUB_REF
     - name: CheckOutRepo
       uses: actions/checkout@v2
       with:
         ref: ${{steps.branch-name.outputs.branch}}
+      run: echo "${{steps.branch-name.outputs.branch}}"
+    - name: Get branch name test2
+      id: branch-name
+      run: echo "$GITHUB_REF"
+      
